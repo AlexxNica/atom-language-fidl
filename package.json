@@ -1,0 +1,15 @@
+{
+  "name": "language-fidl",
+  "version": "0.0.1",
+  "description": "Syntax highlighting for FIDL",
+  "keywords": [
+    "fidl",
+    "fuchsia"
+  ],
+  "repository": "https://github.com/fuchsia-mirror/atom-language-fidl",
+  "license": "BSD-3-Clause",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": []
+}

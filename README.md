@@ -1,5 +1,7 @@
-Fuchsia Open Source Template Repository
-=======================================
+# FIDL language support in Atom
 
-This repository is a template that we will use when creating new open source
-repositories for Fuchsia.
+Adds syntax highlighting to [FIDL](https://fuchsia.googlesource.com/fidl) files
+in Atom.
+
+Contributions are greatly appreciated. Please refer to the
+[contributing guidelines](./CONTRIBUTING.md) for more information.

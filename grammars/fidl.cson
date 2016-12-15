@@ -1,0 +1,187 @@
+'scopeName': 'source.fidl'
+'name': 'FIDL'
+'fileTypes': ['fidl']
+'patterns': [
+  {
+    'include': '#comments'
+  }
+  {
+    'include': '#literal'
+  }
+  {
+    'match': '\\b(import|module)\\b'
+    'name': 'keyword.control.fidl'
+  }
+  {
+    'match': '\\b(default|const)\\b'
+    'name': 'keyword.fidl'
+  }
+  {
+    'match': '\\b(bool|float|double|int8|int16|int32|int64|uint8|uint16|uint32|uint64|string)\\b'
+    'name': 'storage.type.basic.fidl'
+  }
+  {
+    'match': '\\b(handle|array|map)\\b'
+    'name': 'storage.type.compound.fidl'
+  }
+  {
+    'begin': '\\b(struct|union)\\b\\s*([_A-Za-z][_A-Za-z0-9]*)\\b'
+    'beginCaptures':
+      '1':
+        'name': 'storage.type.fidl'
+      '2':
+        'name': 'entity.name.type.fidl'
+    'end': '(?<=\\})'
+    'name': 'meta.struct-union-block.fidl'
+    'patterns': [
+      {
+        'begin': '\\{'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.section.block.begin.fidl'
+        'end': '\\}'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.section.block.end.fidl'
+        'name': 'meta.block.cpp'
+        'patterns': [
+          {
+            'include': '$base'
+          }
+        ]
+      }
+    ]
+  }
+  {
+    'begin': '\\b(interface)\\b\\s*([_A-Za-z][_A-Za-z0-9]*)\\b'
+    'beginCaptures':
+      '1':
+        'name': 'storage.type.fidl'
+      '2':
+        'name': 'entity.name.type.fidl'
+    'end': '(?<=\\})'
+    'name': 'meta.interface-block.fidl'
+    'patterns': [
+      {
+        'begin': '\\b([_A-Za-z][_A-Za-z0-9]*)\\b'
+        'beginCaptures':
+          '1':
+            'name': 'entity.name.function.fidl'
+        'end': '(?<=;)'
+        'patterns': [
+          {
+            'include': '$base'
+          }
+        ]
+      }
+      {
+        'include': '$base'
+      }
+    ]
+  }
+  {
+    'begin': '\\b(enum)\\b\\s*([_A-Za-z][_A-Za-z0-9]*)\\b'
+    'beginCaptures':
+      '1':
+        'name': 'storage.type.fidl'
+      '2':
+        'name': 'entity.name.type.fidl'
+    'end': '(?<=\\})'
+    'name': 'meta.enum-block.fidl'
+    'patterns': [
+      {
+        'include': '$base'
+      }
+    ]
+  }
+]
+'repository':
+  'comments':
+    'patterns': [
+      {
+        'begin': '/\\*'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.comment.begin.fidl'
+        'end': '\\*/'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.comment.end.fidl'
+        'name': 'comment.block.fidl'
+      }
+      {
+        'match': '\\*/.*\\n'
+        'name': 'invalid.illegal.stray-comment-end.fidl'
+      }
+      {
+        'begin': '(^[ \\t]+)?(?=//)'
+        'beginCaptures':
+          '1':
+            'name': 'punctuation.whitespace.comment.leading.fidl'
+        'end': '(?!\\G)'
+        'patterns': [
+          {
+            'begin': '//'
+            'beginCaptures':
+              '0':
+                'name': 'punctuation.definition.comment.fidl'
+            'end': '\\n'
+            'name': 'comment.line.double-slash.fidl'
+            'patterns': [
+              {
+                'match': '(?>\\\\\\s*\\n)'
+                'name': 'punctuation.separator.continuation.fidl'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  'literal':
+    'patterns': [
+      {
+        'include': '#string'
+      }
+      {
+        'match': '\\b(true|false)\\b'
+        'name': 'constant.bool.language.fidl'
+      }
+      {
+        'match': '\\b(float|double)(.INFINITY|.NEGATIVE_INFINITY|.NAN)\\b'
+        'name': 'constant.float.language.fidl'
+      }
+      {
+        'match': '\\b((0(x|X)[0-9a-fA-F]*)|(([0-9]+\\.?[0-9]*)|(\\.[0-9]+))((e|E)(\\+|-)?[0-9]+)?)\\b'
+        'name': 'constant.numeric.c'
+      }
+    ]
+  'string':
+    'patterns': [
+      {
+        'begin': '"'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.string.begin.fidl'
+        'end': '"'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.fidl'
+        'name': 'string.quoted.double.fidl'
+        'patterns': [
+          {
+            'include': '#string_escaped_char'
+          }
+        ]
+      }
+    ]
+  'string_escaped_char':
+    'patterns': [
+      {
+        'match': '\\\\(\\\\|[abefnprtv\'"?]|[0-3]\\d{,2}|[4-7]\\d?|x[a-fA-F0-9]{,2}|u[a-fA-F0-9]{,4}|U[a-fA-F0-9]{,8})'
+        'name': 'constant.character.escape.fidl'
+      }
+      {
+        'match': '\\\\.'
+        'name': 'invalid.illegal.unknown-escape.fidl'
+      }
+    ]
